@@ -1,0 +1,9 @@
+<h1>{{category.name}}</h1>
+<h2>{{category.description}}</h2>
+<ul>
+{% for transaction in category.transaction_set.all  %}
+    <li>{{transaction.note}} tiene {{transaction.counter}} consulta{{transaction.counter|pluralize:',s'}}</li>
+{% endfor %}
+</ul>
+<br>
+<a href="{% url 'transactionsApp:details_consult_transaction' category.id %}">Quieres volver a el listado de transacciones por categoria</a>

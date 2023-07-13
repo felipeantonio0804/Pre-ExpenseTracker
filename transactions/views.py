@@ -39,4 +39,7 @@ def details_consult_transaction(request,category_id):
         return HttpResponseRedirect(reverse('transactionsApp:details_results_category',args=(category.id,)))
     
 def details_results_category(request,category_id):
-    return HttpResponse(f"Estas viendo el detalle de la categoria {category_id} para ver cuantas veces ha sido consultada esta transaccion por el contador")
+    context = {
+        'category': get_object_or_404(Category,pk=category_id)
+    }
+    return render(request,'transactions/results.html',context)
