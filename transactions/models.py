@@ -17,6 +17,7 @@ class Transaction(models.Model):
     amount = models.DecimalField(max_digits=5,decimal_places=2)
     note = models.CharField(max_length=250)
     type = models.IntegerField(default=TypeTransaction.EXPENSE, choices=TypeTransaction.choices)
+    counter = models.IntegerField(default=0)
 
     def __str__(self):
         if (self.type == TypeTransaction.EXPENSE):
