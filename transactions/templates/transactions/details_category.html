@@ -1,4 +1,4 @@
-<form action="{% url 'transactionsApp:details_results_transaction' category.id %}" method='post'>
+<form action="{% url 'transactionsApp:details_consult_transaction' category.id %}" method='post'>
     {% csrf_token %}
     <fieldset>
         <legend>
@@ -20,5 +20,5 @@
             <br>
         {% endfor %}
     </fieldset>
-    <input type="submit" value='Detalle'>
+    <input type="submit" value='Consultar transaccion'>
 </form>
