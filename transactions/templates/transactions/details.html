@@ -1,0 +1,8 @@
+{% if category %}
+    <h2>Listado de transacciones de la categoria {{category.name}}</h2><br/>
+    <ul>
+    {% for transaction in category.transaction_set.all  %}
+        <li>{{transaction.date}} {{transaction.amount}} {{transaction.note}}</li>    
+    {% endfor %}
+    </ul>
+{% endif %}
