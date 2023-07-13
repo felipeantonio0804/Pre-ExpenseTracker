@@ -1,25 +1,49 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse,HttpResponseRedirect
 from django.urls import  reverse
+from django.views import generic
 from .models import Category,Transaction
 
-def index(request):
-    context = {
-        'category_list': Category.objects.all()
-    }
-    return render(request,'transactions/index.html',context)
+class IndexView(generic.ListView):
+    template_name = 'transactions/index.html'
+    context_object_name = 'category_list'
+    
+    def get_queryset(self):
+        return Category.objects.all() 
+        #Para obtener las 5 primeras categorias por fecha ordenada y de mas recientes a mas antiguas
+        #return Category.objects.order_by("-pub_date")[:5]
 
-def details(request,category_id):
-    context = {
-        'category': get_object_or_404(Category,pk=category_id)
-    }
-    return render(request,'transactions/details.html',context)
+# ListView
+# def index(request):
+#     context = {
+#         'category_list': Category.objects.all()
+#     }
+#     return render(request,'transactions/index.html',context)
 
-def details_category(request,category_id):
-    context = {
-        'category': get_object_or_404(Category,pk=category_id)
-    }
-    return render(request,'transactions/details_category.html',context)
+class DetailsView(generic.DetailView):
+    model = Category
+    template_name = 'transactions/details.html'
+    slug_field = 'id'
+    
+    
+#DetailView
+# def details(request,category_id):
+#     context = {
+#         'category': get_object_or_404(Category,pk=category_id)
+#     }
+#     return render(request,'transactions/details.html',context)
+
+class DetailsCategoryView(generic.DetailView):
+    model = Category
+    template_name = 'transactions/details_category.html'
+    slug_field = 'id'
+
+#DetailView
+# def details_category(request,category_id):
+#     context = {
+#         'category': get_object_or_404(Category,pk=category_id)
+#     }
+#     return render(request,'transactions/details_category.html',context)
 
 def details_consult_transaction(request,category_id):
     category = get_object_or_404(Category,pk=category_id)
@@ -37,9 +61,15 @@ def details_consult_transaction(request,category_id):
         transaction.counter += 1
         transaction.save()
         return HttpResponseRedirect(reverse('transactionsApp:details_results_category',args=(category.id,)))
-    
-def details_results_category(request,category_id):
-    context = {
-        'category': get_object_or_404(Category,pk=category_id)
-    }
-    return render(request,'transactions/results.html',context)
+
+class DetailsResultsCategoryView(generic.DetailView):
+    model = Category
+    template_name = 'transactions/results.html'
+    slug_field = 'id' 
+
+#DetailView    
+# def details_results_category(request,category_id):
+#     context = {
+#         'category': get_object_or_404(Category,pk=category_id)
+#     }
+#     return render(request,'transactions/results.html',context)
