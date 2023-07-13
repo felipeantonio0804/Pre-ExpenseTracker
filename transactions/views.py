@@ -1,7 +1,12 @@
+from django.shortcuts import render
 from django.http import HttpResponse
+from .models import Category,Transaction
 
 def index(request):
-    return HttpResponse("Hello, world! This is the home page. of transactions app")
+    context = {
+        'category_list': Category.objects.all()
+    }
+    return render(request,'transactions/index.html',context)
 
 def details(request,category_id):
     return HttpResponse(f"Estas viendo el detalle de la categoria {category_id}")

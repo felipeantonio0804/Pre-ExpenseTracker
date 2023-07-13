@@ -1,0 +1,10 @@
+{% if category_list %}
+    <h2>Listado de categorias</h2><br/>
+    <ul>
+    {% for category in category_list  %}
+        <li><a href="{{category.id}}">{{category.name}}</a></li>    
+    {% endfor %}
+</ul>
+{% else %}
+    <p>No hay categorias registradas en el sistema aún...</p>
+{% endif %}
