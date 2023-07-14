@@ -30,7 +30,12 @@ class TransactionModelTests(TestCase):
         past_date = date.today() - timedelta(days=30)
         self.transaction.date = past_date
         self.assertIs(self.transaction.is_recent_date_of_transaction(),False)
-        
+
+
+def create_transaction(category,date,amount,note):
+    '''Create a transaction with the sent parameters, associated to the category'''
+    return category.transaction_set.create(date=date,amount=amount,note=note)
+   
 # Views
 class TransactionDetailsViewTests(TestCase):
     def setUp(self):
@@ -45,12 +50,20 @@ class TransactionDetailsViewTests(TestCase):
         self.assertQuerysetEqual(response.context['transactions'],[])
 
     def test_no_watch__future_transactions_for_category(self):
-        '''If there are transaction in the category but with future date from today'''
+        '''If there are transactions in the category but with future date from today'''
         future_date = date.today() + timedelta(days=1)
-        self.transaction = self.category.transaction_set.create(date=future_date,amount=200.50,note='Transaction of test')
+        transaction = create_transaction(self.category,date=future_date,amount=200.50,note='Transaction of test')
         
         response = self.client.get(reverse('transactionsApp:details',args=(self.category.id,)))
-        self.assertNotIn(self.transaction,response.context['transactions'])
+        self.assertNotIn(transaction,response.context['transactions'])
         #Execute the validations of no transactions for category
         self.test_no_transactions_for_category()
+
+    def test_watch__past_transactions_for_category(self):
+        '''If there are transactions in the category but with past date from today'''
+        past_date = date.today() - timedelta(days=1)
+        transaction = create_transaction(self.category,date=past_date,amount=200.50,note='Transaction of test')
+        
+        response = self.client.get(reverse('transactionsApp:details',args=(self.category.id,)))
+        self.assertQuerysetEqual(response.context['transactions'],[transaction])
 
