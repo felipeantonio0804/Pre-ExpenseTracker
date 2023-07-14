@@ -9,7 +9,7 @@ class IndexView(generic.ListView):
     context_object_name = 'category_list'
     
     def get_queryset(self):
-        return Category.objects.all() 
+        return Category.objects.order_by("name")
         #Para obtener las 5 primeras categorias por fecha ordenada y de mas recientes a mas antiguas
         #return Category.objects.order_by("-pub_date")[:5]
 
@@ -24,8 +24,8 @@ class DetailsView(generic.DetailView):
     model = Category
     template_name = 'transactions/details.html'
     slug_field = 'id'
-    
-    
+
+
 #DetailView
 # def details(request,category_id):
 #     context = {
