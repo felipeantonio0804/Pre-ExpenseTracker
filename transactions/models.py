@@ -1,3 +1,4 @@
+from datetime import date,timedelta
 from django.db import models
 
 class Category(models.Model):
@@ -13,7 +14,7 @@ class TypeTransaction(models.IntegerChoices):
 
 class Transaction(models.Model):
     category = models.ForeignKey('Category', on_delete=models.RESTRICT)
-    date = models.DateField('date transaction',auto_now=True)
+    date = models.DateField('date transaction')
     amount = models.DecimalField(max_digits=5,decimal_places=2)
     note = models.CharField(max_length=250)
     type = models.IntegerField(default=TypeTransaction.EXPENSE, choices=TypeTransaction.choices)
@@ -24,3 +25,7 @@ class Transaction(models.Model):
             return "Gasto, {} {}".format(self.note,self.amount)
         elif(self.type == TypeTransaction.REVENUE):
             return "Ingreso, {} {}".format(self.note,self.amount)
+        
+    def is_recent_date_of_transaction(self):
+        '''Return if the transaction date is less than 5 days ago'''
+        return date.today() - timedelta(days=5) < self.date   
