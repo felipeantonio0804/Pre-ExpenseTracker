@@ -49,8 +49,8 @@ class TransactionDetailsViewTests(TestCase):
         self.assertContains(response,'No hay transacciones para esta categoría')
         self.assertQuerysetEqual(response.context['transactions'],[])
 
-    def test_no_watch__future_transactions_for_category(self):
-        '''If there are transactions in the category but with future date from today'''
+    def test_no_watch_future_transaction_for_category(self):
+        '''If there is a transaction in the category but with future date from today'''
         future_date = date.today() + timedelta(days=1)
         transaction = create_transaction(self.category,date=future_date,amount=200.50,note='Transaction of test')
         
@@ -59,11 +59,41 @@ class TransactionDetailsViewTests(TestCase):
         #Execute the validations of no transactions for category
         self.test_no_transactions_for_category()
 
-    def test_watch__past_transactions_for_category(self):
-        '''If there are transactions in the category but with past date from today'''
+    def test_watch_past_transaction_for_category(self):
+        '''If there is a transaction in the category but with past date from today'''
         past_date = date.today() - timedelta(days=1)
         transaction = create_transaction(self.category,date=past_date,amount=200.50,note='Transaction of test')
         
         response = self.client.get(reverse('transactionsApp:details',args=(self.category.id,)))
         self.assertQuerysetEqual(response.context['transactions'],[transaction])
+
+    def test_watch_past__and_future_transactions_for_category(self):
+        '''If there are transactions in the category but with one in the past an other in the future'''
+        past_date = date.today() - timedelta(days=1)
+        future_date = date.today() + timedelta(days=1)
+        transaction1 = create_transaction(self.category,date=past_date,amount=200.50,note='Transaction of test 1')
+        transaction2 = create_transaction(self.category,date=future_date,amount=200.50,note='Transaction of test 2')
+        
+        response = self.client.get(reverse('transactionsApp:details',args=(self.category.id,)))
+        self.assertQuerysetEqual(response.context['transactions'],[transaction1])
+
+    def test_watch_past_transactions_for_category(self):
+        '''If there are transactions in the category but with past date from today'''
+        past_date = date.today() - timedelta(days=1)
+        transaction1 = create_transaction(self.category,date=past_date,amount=200.50,note='Transaction of test 1')
+        transaction2 = create_transaction(self.category,date=past_date,amount=200.50,note='Transaction of test 2')
+        
+        response = self.client.get(reverse('transactionsApp:details',args=(self.category.id,)))
+        self.assertQuerysetEqual(response.context['transactions'],[transaction1,transaction2])
+
+    def test_watch_future_transactions_for_category(self):
+        '''If there are transactions in the category but with future date from today'''
+        future_date = date.today() + timedelta(days=1)
+        transaction1 = create_transaction(self.category,date=future_date,amount=200.50,note='Transaction of test 1')
+        transaction2 = create_transaction(self.category,date=future_date,amount=200.50,note='Transaction of test 2')
+        
+        response = self.client.get(reverse('transactionsApp:details',args=(self.category.id,)))
+        self.assertQuerysetEqual(response.context['transactions'],[])
+
+    
 
