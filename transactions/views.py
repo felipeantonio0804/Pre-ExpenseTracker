@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse,HttpResponseRedirect
 from django.urls import  reverse
@@ -20,18 +22,19 @@ class IndexView(generic.ListView):
 #     }
 #     return render(request,'transactions/index.html',context)
 
-class DetailsView(generic.DetailView):
-    model = Category
-    template_name = 'transactions/details.html'
-    slug_field = 'id'
+# class DetailsView(generic.DetailView):
+#     model = Category
+#     template_name = 'transactions/details.html'
+#     slug_field = 'id'
 
 
 #DetailView
-# def details(request,category_id):
-#     context = {
-#         'category': get_object_or_404(Category,pk=category_id)
-#     }
-#     return render(request,'transactions/details.html',context)
+def details(request,category_id):
+    context = {
+        'category': get_object_or_404(Category,pk=category_id),
+        'transactions': get_object_or_404(Category,pk=category_id).transaction_set.filter(date__lte=date.today()).order_by('-date')
+    }
+    return render(request,'transactions/details.html',context)
 
 class DetailsCategoryView(generic.DetailView):
     model = Category

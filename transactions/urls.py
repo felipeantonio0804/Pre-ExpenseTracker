@@ -6,7 +6,7 @@ urlpatterns = [
     # * ex: /transactions/
     path('', views.IndexView.as_view(),name='index'),
     # * ex: /transactions/5
-    path('<slug:slug>/', views.DetailsView.as_view(),name='details'),
+    path('<int:category_id>/', views.details,name='details'),
     # * ex: /transactions/details_category/5
     path('details_category/<slug:slug>/', views.DetailsCategoryView.as_view(),name='details_category'),
      # * ex: /transactions/details_consult_transaction/5
