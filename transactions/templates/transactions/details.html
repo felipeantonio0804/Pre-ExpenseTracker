@@ -1,9 +1,13 @@
 {% if category %}
     <h2>Listado de transacciones de la categoria {{category.name}}</h2><br/>
     <ul>
-    {% for transaction in transactions  %}
-        <li>{{transaction.date}} {{transaction.amount}} {{transaction.note}}</li>    
-    {% endfor %}
+    {% if transactions %}
+        {% for transaction in transactions  %}
+            <li>{{transaction.date}} {{transaction.amount}} {{transaction.note}}</li>    
+        {% endfor %}
+    {% else %}
+        <p><strong>No hay transacciones para esta categoría</strong></p>
+    {% endif %}
     </ul>
 {% endif %}
 <br>

@@ -2,6 +2,7 @@ from datetime import date,timedelta
 
 from django.test import TestCase
 from .models import Category,Transaction
+from django.urls import reverse
 
 # Models
 class TransactionModelTests(TestCase):
@@ -31,3 +32,25 @@ class TransactionModelTests(TestCase):
         self.assertIs(self.transaction.is_recent_date_of_transaction(),False)
         
 # Views
+class TransactionDetailsViewTests(TestCase):
+    def setUp(self):
+        self.category = Category(name='Category of test',description='Category of test description')
+        self.category.save()
+
+    def test_no_transactions_for_category(self):
+        '''If there are no any transaction in the category, an appropiate messages is displayed'''
+        response = self.client.get(reverse('transactionsApp:details',args=(self.category.id,)))
+        self.assertEqual(response.status_code,200)
+        self.assertContains(response,'No hay transacciones para esta categoría')
+        self.assertQuerysetEqual(response.context['transactions'],[])
+
+    def test_no_watch__future_transactions_for_category(self):
+        '''If there are transaction in the category but with future date from today'''
+        future_date = date.today() + timedelta(days=1)
+        self.transaction = self.category.transaction_set.create(date=future_date,amount=200.50,note='Transaction of test')
+        
+        response = self.client.get(reverse('transactionsApp:details',args=(self.category.id,)))
+        self.assertNotIn(self.transaction,response.context['transactions'])
+        #Execute the validations of no transactions for category
+        self.test_no_transactions_for_category()
+
