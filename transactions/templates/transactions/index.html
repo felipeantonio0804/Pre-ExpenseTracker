@@ -1,12 +1,14 @@
-{% load static %}
-<link rel='stylesheet' href="{% static 'transactions/style.css' %}">
-{% if category_list %}
-    <h2>Listado de categorias</h2><br/>
-    <ul>
-    {% for category in category_list  %}
-        <li><a href="{% url 'transactionsApp:details' category.id %}">{{category.name}}</a></li>    
-    {% endfor %}
-</ul>
-{% else %}
-    <p>No hay categorias registradas en el sistema aún...</p>
-{% endif %}
+{% extends "transactions/base.html" %}
+{% block title %}My amazing app{% endblock %}
+{% block content %}
+    {% if category_list %}
+        <h1>Listado de categorias</h1>
+        <ul>
+        {% for category in category_list  %}
+            <li><a href="{% url 'transactionsApp:details' category.id %}">{{category.name}}</a></li>    
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>No hay categorias registradas en el sistema aún...</p>
+    {% endif %}
+{% endblock %}

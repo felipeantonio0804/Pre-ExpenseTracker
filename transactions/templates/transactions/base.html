@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel='stylesheet' href="{% static 'transactions/reset.css' %}">
+    <link rel='stylesheet' href="{% static 'transactions/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Aplicacion de control de gastos e ingresos</h1>
+    </header>
+    <main>
+        <div id="sidebar">
+            {% block sidebar %}
+                <ul>
+                    <li><a href="{% url 'transactionsApp:index' %}">Home</a></li>
+                </ul>
+            {% endblock %}
+        </div>
+        <div id="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </main>
+    <footer>
+        <a href="{% url 'transactionsApp:index' %}">App</a>
+        <a href="#">Contacto</a>
+        <a href="#">Agregar categoria</a>
+        <a href="#">Politica de privacidad</a>
+        <a href="#">Terminos y condiciones</a>
+    </footer>
+</body>
+</html>
