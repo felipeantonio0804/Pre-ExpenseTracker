@@ -1,12 +1,16 @@
 {% extends "transactions/base.html" %}
 {% block title %}Revision de: {{category.name}}{% endblock %}
 {% block content %}
-    <h1 class='niceTitle'>{{category.description}}</h1>
-    <ul>
-    {% for transaction in category.transaction_set.all  %}
-        <li>{{transaction.note}} tiene {{transaction.counter}} consulta{{transaction.counter|pluralize:',s'}}</li>
-    {% endfor %}
-    </ul>
-    <br>
+    {% if perms.transactions.can_see_results %}
+        <h1 class='niceTitle'>{{category.description}}</h1>
+        <ul>
+        {% for transaction in category.transaction_set.all  %}
+            <li>{{transaction.note}} tiene {{transaction.counter}} consulta{{transaction.counter|pluralize:',s'}}</li>
+        {% endfor %}
+        </ul>
+        <br>
+    {% else %}
+        <p><strong>Lo sentimos tu usuario no tiene el permiso de ver el total de veces que han sido consultas las transacciones</strong></p>
+    {% endif %}
     <a href="{% url 'transactionsApp:details_category' category.id %}" class='bright'>Quieres volver a el listado de transacciones por categoria</a>
 {% endblock %}

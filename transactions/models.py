@@ -28,4 +28,8 @@ class Transaction(models.Model):
         
     def is_recent_date_of_transaction(self):
         '''Return if the transaction date is less than 5 days ago'''
-        return date.today() >= self.date >= date.today() - timedelta(days=5)    
+        return date.today() >= self.date >= date.today() - timedelta(days=5)
+
+    class Meta:
+        permissions = (("can_see_results", "See the counter of the transactions in the result screen"),
+                       ("can_consult_transaction", "Consult the transaction to display the list of transactions"))    
