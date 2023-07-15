@@ -1,14 +1,18 @@
-{% if category %}
-    <h2>Listado de transacciones de la categoria {{category.name}}</h2><br/>
-    <ul>
-    {% if transactions %}
-        {% for transaction in transactions  %}
-            <li>{{transaction.date}} {{transaction.amount}} {{transaction.note}}</li>    
-        {% endfor %}
-    {% else %}
-        <p><strong>No hay transacciones para esta categoría</strong></p>
+{% extends "transactions/base.html" %}
+{% block title %}{{category.name}}{% endblock %}
+{% block content %}
+    {% if category %}
+        <h2>Listado de transacciones de la categoria {{category.name}}</h2><br/>
+        <ul>
+        {% if transactions %}
+            {% for transaction in transactions  %}
+                <li>{{transaction.date}} {{transaction.amount}} {{transaction.note}}</li>    
+            {% endfor %}
+        {% else %}
+            <p><strong>No hay transacciones para esta categoría</strong></p>
+        {% endif %}
+        </ul>
     {% endif %}
-    </ul>
-{% endif %}
-<br>
-<a href="{% url 'transactionsApp:details_category' category.id %}">Consultar las transacciones</a>
+    <br>
+    <a href="{% url 'transactionsApp:details_category' category.id %}">Consultar las transacciones</a>
+{% endblock %}
