@@ -4,11 +4,16 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse,HttpResponseRedirect
 from django.urls import  reverse
 from django.views import generic
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from .models import Category,Transaction
 
-class IndexView(generic.ListView):
+class IndexView(LoginRequiredMixin,generic.ListView):
     template_name = 'transactions/index.html'
     context_object_name = 'category_list'
+    #login_url = 'accounts/login'
+    #redirect_field_name = 'next'
     
     def get_queryset(self):
         return Category.objects.order_by("name")
@@ -29,6 +34,7 @@ class IndexView(generic.ListView):
 
 
 #DetailView
+@login_required
 def details(request,category_id):
     context = {
         'category': get_object_or_404(Category,pk=category_id),
@@ -36,7 +42,7 @@ def details(request,category_id):
     }
     return render(request,'transactions/details.html',context)
 
-class DetailsCategoryView(generic.DetailView):
+class DetailsCategoryView(LoginRequiredMixin,generic.DetailView):
     model = Category
     template_name = 'transactions/details_category.html'
     slug_field = 'id'
@@ -48,6 +54,7 @@ class DetailsCategoryView(generic.DetailView):
 #     }
 #     return render(request,'transactions/details_category.html',context)
 
+@login_required
 def details_consult_transaction(request,category_id):
     category = get_object_or_404(Category,pk=category_id)
     try:
@@ -65,7 +72,7 @@ def details_consult_transaction(request,category_id):
         transaction.save()
         return HttpResponseRedirect(reverse('transactionsApp:details_results_category',args=(category.id,)))
 
-class DetailsResultsCategoryView(generic.DetailView):
+class DetailsResultsCategoryView(LoginRequiredMixin,generic.DetailView):
     model = Category
     template_name = 'transactions/results.html'
     slug_field = 'id' 

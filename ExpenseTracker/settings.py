@@ -1,3 +1,4 @@
+import os
 """
 Django settings for ExpenseTracker project.
 
@@ -61,7 +62,7 @@ ROOT_URLCONF = 'ExpenseTracker.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -128,3 +129,10 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Para que redirecciones a la pagina especifica y no a /accounts/profile
+LOGIN_REDIRECT_URL = '/transactions'
+# Para que muestre por consola, cualquier mensaje que se quiera enviar por email al no estar este configurado
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# Para saber la redireccion cuando no se esta logeado y acceder a una view protegida
+LOGIN_URL = '/accounts/login'
