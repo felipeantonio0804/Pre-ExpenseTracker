@@ -2,7 +2,7 @@
 {% block title %}My amazing app{% endblock %}
 {% block content %}
     {% if category_list %}
-        <h1>Listado de categorias</h1>
+        <h1 class='niceTitle'>Listado de categorias</h1>
         <ul>
         {% for category in category_list  %}
             <li><a href="{% url 'transactionsApp:details' category.id %}">{{category.name}}</a></li>    

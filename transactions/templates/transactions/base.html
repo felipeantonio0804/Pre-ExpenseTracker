@@ -13,22 +13,14 @@
         <h1>Aplicacion de control de gastos e ingresos</h1>
     </header>
     <main>
-        <div id="sidebar">
-            {% block sidebar %}
-                <ul>
-                    <li><a href="{% url 'transactionsApp:index' %}">Home</a></li>
-                </ul>
-            {% endblock %}
-        </div>
         <div id="content">
             {% block content %}
             {% endblock %}
         </div>
     </main>
     <footer>
-        <a href="{% url 'transactionsApp:index' %}">App</a>
+        <a href="{% url 'transactionsApp:index' %}">Home</a>
         <a href="#">Contacto</a>
-        <a href="#">Agregar categoria</a>
         <a href="#">Politica de privacidad</a>
         <a href="#">Terminos y condiciones</a>
     </footer>

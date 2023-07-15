@@ -2,7 +2,7 @@
 {% block title %}{{category.name}}{% endblock %}
 {% block content %}
     {% if category %}
-        <h2>Listado de transacciones de la categoria {{category.name}}</h2><br/>
+        <h1 class='niceTitle'>Listado de transacciones de la categoria {{category.name}}</h1>
         <ul>
         {% if transactions %}
             {% for transaction in transactions  %}
@@ -14,5 +14,5 @@
         </ul>
     {% endif %}
     <br>
-    <a href="{% url 'transactionsApp:details_category' category.id %}">Consultar las transacciones</a>
+    <a href="{% url 'transactionsApp:details_category' category.id %}" class='bright'>Consultar las transacciones</a>
 {% endblock %}

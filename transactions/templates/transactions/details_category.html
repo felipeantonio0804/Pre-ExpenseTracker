@@ -1,24 +1,28 @@
-<form action="{% url 'transactionsApp:details_consult_transaction' category.id %}" method='post'>
-    {% csrf_token %}
-    <fieldset>
-        <legend>
-            <h1>{{category.name}}</h1>
-            {% if error_message%}
-                <p><strong>{{error_message}}</strong></p>
-            {% endif %}
-        </legend>
-        {% for transaction in category.transaction_set.all  %}
-            <input 
-                type='radio'
-                name='transaction'
-                id='transaction{{ forloop.counter }}'
-                value='{{transaction.id}}'
-            >
-            <label for="transaction{{ forloop.counter }}">
-                {{ transaction.note }}
-            </label>
-            <br>
-        {% endfor %}
-    </fieldset>
-    <input type="submit" value='Consultar transaccion'>
-</form>
+{% extends "transactions/base.html" %}
+{% block title %}Consultar de: {{category.name}}{% endblock %}
+{% block content %}
+    <form action="{% url 'transactionsApp:details_consult_transaction' category.id %}" method='post'>
+        {% csrf_token %}
+        <fieldset>
+            <legend>
+                <h1>{{category.name}}</h1>
+                {% if error_message%}
+                    <p><strong>{{error_message}}</strong></p>
+                {% endif %}
+            </legend>
+            {% for transaction in category.transaction_set.all  %}
+                <input 
+                    type='radio'
+                    name='transaction'
+                    id='transaction{{ forloop.counter }}'
+                    value='{{transaction.id}}'
+                >
+                <label for="transaction{{ forloop.counter }}">
+                    {{ transaction.note }}
+                </label>
+                <br>
+            {% endfor %}
+        </fieldset>
+        <input type="submit" value='Consultar transaccion'>
+    </form>
+{% endblock %}
