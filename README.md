@@ -4,11 +4,17 @@ Forma inicial donde se tiene unicamente la seccion de categorias y transaccione,
 Se crearon pantallas de funcionalidad principal:
 
 [Gestos de administracion de modelos](http://127.0.0.1:8000/admin/)
+
 [Pagina principal de categorias](http://127.0.0.1:8000/transactions/)
+
 [Transacciones de las categorias](http://127.0.0.1:8000/transactions/1)
+
 [Consultar una transaccion en especifico](http://127.0.0.1:8000/transactions/details_category/1)
+
 [Ver contador de consultas de cada transaccion](http://127.0.0.1:8000/transactions/details_results_category/1)
+
 [Ver contador de consultas de cada transaccion](http://127.0.0.1:8000/transactions/details_results_category/1)
+
 [Gestion de usuarios para login- logout, etc.](http://127.0.0.1:8000/accounts/)
 
 
