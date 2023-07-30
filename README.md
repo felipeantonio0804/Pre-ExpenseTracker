@@ -3,11 +3,14 @@ Proyecto creado con el framework django de python.
 Forma inicial donde se tiene unicamente la seccion de categorias y transaccione, administradas por el modulo admin de django.
 Se crearon pantallas de funcionalidad principal:
 
-/transactions/
-/transactions/5
-/transactions/details_category/5
-/transactions/details_consult_transaction/5
-/transactions/details_results_category/5
+[Gestos de administracion de modelos](http://127.0.0.1:8000/admin/)
+[Pagina principal de categorias](http://127.0.0.1:8000/transactions/)
+[Transacciones de las categorias](http://127.0.0.1:8000/transactions/1)
+[Consultar una transaccion en especifico](http://127.0.0.1:8000/transactions/details_category/1)
+[Ver contador de consultas de cada transaccion](http://127.0.0.1:8000/transactions/details_results_category/1)
+[Ver contador de consultas de cada transaccion](http://127.0.0.1:8000/transactions/details_results_category/1)
+[Gestion de usuarios para login- logout, etc.](http://127.0.0.1:8000/accounts/)
+
 
 Ademas se hace el uso de la aplicacion de auth. Para temas de autentificacion y autorizacion.
 
